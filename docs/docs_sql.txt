@@ -1,0 +1,3 @@
+
+
+ALTER TABLE members ADD address2 int(11) AFTER address
