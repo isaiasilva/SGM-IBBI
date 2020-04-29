@@ -31,12 +31,12 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::post('/member/register', 'MemberController@store')->name('member.register');
     Route::get('/members/all', 'MemberController@index')->name('members.all');
     Route::get('/member/profile/{id}', 'MemberController@show')->name('member.profile');
-    Route::get('/member/edit/{id}', 'MemberController@modify')->name('member.edit');
+    Route::get('/member/atualizar/{id}', 'MemberController@modify')->name('member.atualizar');
     Route::post('/member/delete/{id}', 'MemberController@destroy')->name('member.delete');
     Route::post('/member/delete', 'MemberController@delete')->name('member.delete.multi');
     Route::post('/member/upgrade', 'MemberController@upgrade')->name('member.upgrade');
     Route::post('/member/upload/img', 'MemberController@uploadImg')->name('member.upload.img');
-    Route::post('/member/update', 'MemberController@updateMember')->name('member.update');
+    Route::post('/member/atualizar', 'MemberController@updateMember')->name('member.atualizar');
     Route::get('/member/analysis', 'MemberController@memberAnalysis')->name('member.analysis');
     Route::get('/member/stats', 'MemberController@memberRegStats')->name('member.reg.stats');
     Route::get('/member/attendance/{id}', 'MemberController@attendance')->name('member.attendance');

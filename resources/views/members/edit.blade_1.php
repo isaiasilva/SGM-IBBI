@@ -77,7 +77,7 @@
             $phone = $member->phone;
             $occupation = $member->occupation;
             $position = $member->postion;
-            $address = $member->	;
+            $address = $member->address;
             $address2 = $member->address2;
             $postal = $member->postal;
             $city = $member->city;

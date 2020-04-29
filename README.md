@@ -30,7 +30,7 @@
 Diversas novas modificações e implementações.
 
 
-
+1. https://blog.especializati.com.br/alterar-tabela-migrations-laravel-sem-perder-dados/
 
 
 

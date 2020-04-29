@@ -87,6 +87,7 @@ class MemberController extends Controller
             }
             $relatives = json_encode($relatives);
         }
+        
 
         $this->validate($request, [
             'nome_completo' => 'bail|required|string|max:255',
@@ -94,9 +95,11 @@ class MemberController extends Controller
             'dob' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'cpf' => 'required|string|max:255',
-            'cpf' => 'required|999.999.999-99'
         ]);
+        
         $image_name = 'profile.png'; // default profile image
+      
+      //  print $image_name;
         if ($request->hasFile('photo'))
         {
             $image = $request->file('photo');
@@ -204,28 +207,29 @@ class MemberController extends Controller
         $member->class_id = $request->get('class_id');
         $member->section_id = $request->get('section_id');
         $member->nome_completo = $request->get('nome_completo');
-     #   $member->lastname = $request->get('lastname');
-        //$member->image = $request->get('image');
-        $member->mobileno = $request->get('mobileno');
+        $member->cpf = $request->get('cpf');
+        $member->rg = $request->get('rg');
+        $member->address = $request->get('address');
+        $member->bairro = $request->get('bairro');
+        $member->dob = $request->get('dob');
         if (!empty($image_name) && ($image_name!== NULL)) $member->image = $image_name;
-        $member->gender = $request->get('gender');
-        $member->date_of_birth = $request->get('date_of_birth');
-        $member->current_address = $request->get('current_address');
-        $member->guardian_is = $request->get('guardian_is');
-        $member->father_name = $request->get('father_name');
-        $member->father_phone = $request->get('father_phone');
-        $member->father_occupation = $request->get('father_occupation');
-        $member->mother_name = $request->get('mother_name');
-        $member->mother_phone = $request->get('mother_phone');
-        $member->mother_occupation = $request->get('mother_occupation');
-        $member->guardian_name = $request->get('guardian_name');
-        $member->guardian_relation = $request->get('guardian_relation');
-        $member->guardian_phone = $request->get('guardian_phone');
-        $member->guardian_occupation = $request->get('guardian_occupation');
-        $member->guardian_address = $request->get('guardian_address');
-        $member->is_active = $request->get('is_active');
+        $member->email = $request->get('email');
+        $member->phone = $request->get('phone');
+        $member->position = $request->get('position');
+        $member->postal = $request->get('postal');
+        $member->city = $request->get('city');
+        $member->state = $request->get('state');
+        $member->country = $request->get('country');
+        $member->sexo = $request->get('sexo');
+        $member->estado_civil = $request->get('estado_civil');
+        $member->status = $request->get('status');
+        $member->batismo_status = $request->get('batismo_status');
+        $member->data_batismo = $request->get('data_batismo');
+        $member->wedding_anniversary = $request->get('wedding_anniversary');
+        $member->photo = $request->get('photo');
+
         $member->save();
-        return redirect(action('MemberController@edit_form', $id))->with('status', 'Member Record Successfully updated');
+        return redirect(action('MemberController@edit_form', $id))->with('status', 'Registro de membro atualizado com sucesso!');
 
     }
 
@@ -272,7 +276,7 @@ class MemberController extends Controller
       $user = \Auth::user();
       $member = Member::whereId($id)->where('branch_id',$user->id)->first();
       if (!$member) { return 'Member Not exists'; }
-      return view('members.edit', compact('member'));
+      return view('members.atualizar', compact('member'));
     }
 
     public function upgrade(Request $request){

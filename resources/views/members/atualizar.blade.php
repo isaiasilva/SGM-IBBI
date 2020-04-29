@@ -1,7 +1,7 @@
 
 @extends('layouts.app')
 
-@section('title') Cadastro de Membros @endsection
+@section('title') Atualização de Membros @endsection
 
 @section('link')
 <link href="{{ URL::asset('css/cam-style.css') }}" rel="stylesheet">
@@ -35,7 +35,7 @@
         <!--Page Title-->
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <div id="page-title">
-            <h1 class="page-header text-overflow">Adicionar Membro</h1>
+            <h1 class="page-header text-overflow">Atualizar Membro</h1>
         </div>
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <!--End page title-->
@@ -45,7 +45,7 @@
             <li>
                 <i class="fa fa-home"></i><a href="{{route('dashboard')}}"> Dashboard</a>
             </li>
-            <li class="active">Adicionar Membro</li>
+            <li class="active">Atualizar Membro</li>
         </ol>
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <!--End breadcrumb-->
@@ -53,7 +53,32 @@
     <!--FIM Breadcrumb-->
 
 
+<?php
+            $id = $member->id;
+            $nome_completo = $member->nome_completo;
+            $cpf = $member->cpf;
+            $rg = $member->rg;
+            $address = $member->address;
+            $bairro = $member->bairro;
+            $dob = $member->dob;
+            $email = $member->email;
+            $phone = $member->phone;
+            $position = $member->position;            
+            $postal = $member->postal;   
+            $city = $member->city;
+            $state = $member->state;
+            $country = $member->country;
+            $occupation = $member->occupation;
+            $sexo = $member->sexo;
+            $estado_civil = $member->estado_civil;
+            $status = $member->status;
+            $batismo_status = $member->batismo_status;
+            $data_batismo = $member->data_batismo;            
+            $wedding_anniversary = $member->wedding_anniversary;
+            $photo = $member->photo;
 
+?>
+    
     <!--Page content PARTE 01-->
     <!--===================================================-->
     <div id="page-content">
@@ -61,7 +86,7 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="panel rounded-top" style="background-color: #e8ddd3;">
                     <div class="panel-heading">
-                        <h1 class="text-center" style="padding-top:5px">Adicionar Membro</h2>
+                        <h1 class="text-center" style="padding-top:5px">Atualizar Membro</h2>
                     </div>
                     <div class="col-lg-10 col-lg-offset-2">
                         @if (session('status'))
@@ -81,7 +106,7 @@
                         <div class=""  style="border:1pt solid #090c5e; border-radius:25px;">
                             <!-- BASIC FORM ELEMENTS -->
                             <!--===================================================-->
-                            <form id="register-form" method="POST" action="{{route('member.register')}}" class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
+                            <form id="atualizar-form" method="POST" action="{{route('member.atualizar')}}" class="panel-body form-horizontal form-padding" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-6">
                                     <!--Static-->
@@ -96,21 +121,21 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-text-input">Nome</label>
                                         <div class="col-md-9">
-                                            <input type="text" id="nome_completo" name="nome_completo" value="{{old('name')}}" class="form-control" placeholder="Informe o Nome" required>
+                                            <input type="text" id="nome_completo" name="nome_completo" value="{{$nome_completo}}" class="form-control" placeholder="Informe o Nome" required>
                                         </div>
                                     </div>
                                     <!--CPF-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-text-input">CPF</label>
                                         <div class="col-md-9">
-                                            <input type="text" id="cpf" name="cpf" class="form-control" placeholder="CPF" required>
+                                            <input type="text" id="cpf" value="{{$cpf}}" name="cpf" class="form-control" placeholder="CPF" required>
                                         </div>
                                     </div>
                                     <!--RG-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-text-input">RG</label>
                                         <div class="col-md-9">
-                                            <input type="text" id="rg" name="rg" class="form-control" placeholder="RG" required>
+                                            <input type="text" id="rg" value="{{$rg}}" name="rg" class="form-control" placeholder="RG" required>
                                         </div>
                                     </div>
 
@@ -119,7 +144,7 @@
                                     <div class="form-group">
                                     <label class="col-md-3 control-label" for="demo-text-input">Data de Nascimento</label>
                                     <div class="col-md-9">
-                                        <input id="dob" type="text" placeholder="Data de Nascimento" name="dob" class="datepicker form-control" required/>
+                                        <input id="dob" type="text" placeholder="Data de Nascimento" value="{{$dob}}" name="dob" class="datepicker form-control" required/>
                                     </div>
                                 </div>
 
@@ -127,14 +152,14 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-email-input">Email</label>
                                         <div class="col-md-9">
-                                            <input id="email" type="email" id="demo-email-input" class="form-control" name="email" placeholder="Informe o email" required>
+                                            <input id="email" type="email" id="demo-email-input" value="{{$email}}" class="form-control" name="email" placeholder="Informe o email" required>
                                         </div>
                                     </div>
                                     <!--TELEFONE-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-email-input">Telefone (WhatsApp)</label>
                                         <div class="col-md-9">
-                                            <input id="phone" type="text" class="form-control" name="phone" placeholder="Digite o número do celular" required>
+                                            <input id="phone" type="text" class="form-control" name="phone" value="{{$phone}}" placeholder="Digite o número do celular" required>
                                         </div>
                                     </div>
 
@@ -145,7 +170,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-email-input">Profissão</label>
                                         <div class="col-md-9">
-                                            <input id="occupation" type="text" class="form-control" name="occupation" placeholder="Informe sua profissão">
+                                            <input id="occupation" type="text" value="{{$occupation}}" class="form-control" name="occupation" placeholder="Informe sua profissão">
                                         </div>
                                     </div>
                                     <!--FUNCAO ECLESIASTICA-->
@@ -153,6 +178,7 @@
                                         <label class="col-md-3 control-label" for="demo-text-input">Função Eclesiástica</label>
                                         <div class="col-md-9">
                                             <select name="position" class="selectpicker col-xs-6 col-sm-4 col-md-6 col-lg-9" data-style="btn-success">
+                                                <option selected value="{{$position}}">{{$position}}</option>
                                                 <option value="Membro">Membro</option>
                                                 <option value="Pastor Presidente">Pastor Presidente</option>
                                                 <option value="Pastor">Pastor</option>
@@ -179,25 +205,26 @@
                                         </div>
                                     </div>
 
-                                                                <!--É BATIZADO?-->
-                            <div class="form-group pad-ver">
-                                        <label class="col-md-3 control-label">É Batizado?</label>
-                                        <div class="col-md-9">
-                                            <div class="radio">
-                                                    <!-- Inline radio buttons -->
-                                                    <input id="demo-inline-form-radio" class="magic-radio" value="SIM" type="radio" name="batismo_status">
-                                                    <label for="demo-inline-form-radio">SIM</label>
-                                                    <input id="demo-inline-form-radio-2" class="magic-radio" value="NÃO" type="radio" name="batismo_status" checked="checked">
-                                                    <label for="demo-inline-form-radio-2">NÃO</label>
-                                            </div>
+                            <!--É BATIZADO?-->
+                            <div class="form-group pad-ve">
+                                    <label class="col-md-3 control-label">É Batizado?</label>
+                                    <div class="col-md-9">
+                                        <div class="radio">
+                                            <input id="demo-inline-form-radio" class="magic-radio" value="SIM" type="radio" name="batismo_status" <?php if($batismo_status == 'sim'){echo 'checked';}?> >
+                                            <label for="demo-inline-form-radio">SIM</label>
+                                            <input id="demo-inline-form-radio-2" class="magic-radio" value="NÃO" type="radio" name="batismo_status" <?php if($batismo_status == 'nao'){echo 'checked';}?> >
+                                            <label for="demo-inline-form-radio-2">NÃO</label>
                                         </div>
-                              </div>
+                                    </div>
+                            </div>
+
+
 
                                <!--DATA BATISMO-->
                                 <div id="wedding_batismo" class="form-group" style="display:none">
                                     <label class="col-md-3 control-label" for="demo-text-input">Data de Batismo</label>
                                     <div class="col-md-9">
-                                        <input id="data_batismo"  type="text" placeholder="Data de Batismo" name="data_batismo" class="datepicker form-control"/>
+                                        <input id="data_batismo"  type="text" placeholder="Data de Batismo" value="{{$data_batismo}}" name="data_batismo" class="datepicker form-control"/>
                                     </div>
                                 </div>
                                
@@ -211,39 +238,40 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="demo-textarea-input">CEP</label>
                                             <div class="col-md-9">
-                                                <input id="postal" type="text" class="form-control" name="postal" placeholder="Informe o CEP" onblur="pesquisacep(this.value);" />
+                                                <input id="postal" type="text" class="form-control" value="{{$postal}}" name="postal" placeholder="Informe o CEP" onblur="pesquisacep(this.value);" />
                                             </div>
                                         </div>
                                     <?php } ?>
 
-                                    <!--ENDERECO-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-textarea-input">Endereço</label>
-                                            <div class="col-md-9">
-                                                <textarea id="address" name="address" rows="2" class="form-control" placeholder="Endereço"></textarea>
-                                            </div>
-                                        </div>
 
-                                        <!--BAIRRO-->
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="demo-textarea-input">Bairro</label>
-                                            <div class="col-md-9">
-                                                <textarea id="bairro" name="bairro" rows="1" class="form-control" placeholder="Bairro"></textarea>
-                                            </div>
+                                    <!--ENDERECO-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="demo-textarea-input">Endereço</label>
+                                        <div class="col-md-9">
+                                            <input id="address" type="text" class="form-control"  value="{{$address}}" name="address" rows="2" placeholder="Informe o Endereço" required>
                                         </div>
-                                                                        
+                                    </div>
+                                    
+                                    <!--BAIRRO-->
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="demo-textarea-input">Bairro</label>
+                                        <div class="col-md-9">
+                                            <input id="bairro" type="text" class="form-control" value="{{$bairro}}" name="bairro" placeholder="Informe o Bairro" required>
+                                        </div>
+                                    </div>
+
                                     <!--CIDADE-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-textarea-input">Cidade</label>
                                         <div class="col-md-9">
-                                            <input id="city" type="text" class="form-control" name="city" placeholder="Informe a Cidade" required>
+                                            <input id="city" type="text" class="form-control" value="{{$city}}" name="city" placeholder="Informe a Cidade" required>
                                         </div>
                                     </div>
                                     <!--ESTADO-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="demo-textarea-input">Estado</label>
                                         <div class="col-md-9">
-                                            <input id="state" type="text" class="form-control" name="state" placeholder="Informe o Estado" required>
+                                            <input id="state" type="text" class="form-control" value="{{$state}}" name="state" placeholder="Informe o Estado" required>
                                         </div>
                                     </div>
                                     <!--PAIS-->
@@ -251,8 +279,7 @@
                                         <label class="col-md-3 control-label" for="demo-textarea-input">Pais</label>
                                         <div class="col-md-9">
                                             <select class="form-control" name="country" placeholder="Informe o País">
-                                                <option selected value="{{$ipInfo['country']}}">{{$ipInfo['country']}}</option>
-                                                <option selected value="Brasil">Brasil</option>
+                                                <option selected value="{{$country}}">{{$country}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -262,61 +289,59 @@
                                 <label class="col-md-3 control-label">Sexo</label>
                                 <div class="col-md-9">
                                         <div class="radio">
-                                        <input id="demo-form-radio" class="magic-radio" value="Masculino" type="radio" name="sexo" checked>
+                                        <input id="demo-form-radio" class="magic-radio" value="masculino" type="radio" name="sexo" <?php if($sexo == 'Masculino'){echo 'checked';}?> >
                                         <label for="demo-form-radio">Masculino</label>
-                                        <input id="demo-form-radio-2" class="magic-radio" value="Feminino" type="radio" name="sexo">
+                                        <input id="demo-form-radio-2" class="magic-radio" value="feminino" type="radio" name="sexo" <?php if($sexo == 'Feminino'){echo 'checked';}?> >
                                         <label for="demo-form-radio-2">Feminino</label>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                    <label class="col-md-3 control-label">Estado Civil</label>
+                                <label class="col-md-3 control-label">Estado Civil</label>
+                                <div class="col-md-9">
                                     <div class="col-md-9">
-                                        <div class="col-md-9">
-                                            <select class="form-control" id="estado_civil" name="estado_civil" >
-                                                <option selected value="{{$ipInfo['estado_civil']}}">{{$ipInfo['estado_civil']}}</option>
-                                                <option value="Solteiro(a)">Solteiro(a)</option>
-                                                <option value="Casado(a)">Casado(a)</option>
-                                                <option value="Viúvo(a)">Viúvo(a)</option>
-                                                <option value="Divorciado(a)">Divorciado(a)</option>
-                                                <option value="Separado(a)">Separado(a)</option>
-                                            </select>
-                                        </div>
+                                        <select class="form-control" id="estado_civil" name="estado_civil" >
+                                            <option selected value="{{$estado_civil}}">{{$estado_civil}}</option>
+                                            <option value="Solteiro(a)">Solteiro(a)</option>
+                                            <option value="Casado(a)">Casado(a)</option>
+                                            <option value="Viúvo(a)">Viúvo(a)</option>
+                                            <option value="Divorciado(a)">Divorciado(a)</option>
+                                            <option value="Separado(a)">Separado(a)</option>
+                                        </select>
                                     </div>
-                                </div>
-
-
+                                </div>   
+                            </div>
 
 
                             <!--DATA CASAMENTO-->
                             <div id="wedding" class="form-group" style="display:none">
                                 <label class="col-md-3 control-label" for="demo-text-input">Aniversário de Casamento</label>
                                 <div class="col-md-9">
-                                    <input id="wedding_anniversary"  type="text" placeholder="Aniversário Casamento" name="wedding_anniversary" class="datepicker form-control"/>
+                                    <input id="wedding_anniversary" value="{{$wedding_anniversary}}" type="text" placeholder="Aniversário Casamento" name="wedding_anniversary" class="datepicker form-control"/>
                                 </div>
                             </div>
 
 
-
-                                <!--STATUS-->
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="demo-text-input">Status</label>
+                            <!--STATUS-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="demo-text-input">Status</label>
+                                <div class="col-md-9">
                                     <div class="col-md-9">
-                                        <div class="col-md-9">
                                         <select class="form-control" name="status">
-                                            <option selected value="{{$ipInfo['status']}}">{{$ipInfo['status']}}</option>
+                                            <option selected value="{{$status}}">{{$status}}</option>
                                             <option value="Ativo">Ativo</option>
                                             <option value="Inátivo">Inátivo</option>
                                             <option value="Visitante">Visitante</option>
                                             <option value="Congregando">Congregando</option>
                                             <option value="Óbito">Óbito</option>
                                         </select>
-                                    </div>    
-                                </div>                        
-                                </div>
+                                    </div>  
+                                </div>                               
+                            </div>
 
-                                <!--FOTO-->                                 
+                                <!--FOTO-->  
+                                                               
                                     <label class="col-md-3 control-label">Foto</label>
                                     <div class="col-md-8">
                                         <div class="btn btn-file element" >
@@ -339,12 +364,14 @@
                                  
                                 <div class="col-md-9">
                                     <span class=" pull-right">
-                                        <button id="submit" class="btn btn-info pull-center" align="center" type="submit">SALVAR</button>
+                                        <button id="submit" class="btn btn-info pull-center" type="submit">SALVAR</button>
                                     </span>
                                 </div>
+                                
+                                
                                 <div class="col-md-3">
                                     <span class=" pull-right">
-                                        <button class="btn-danger" align="center" onclick="resetForm('#register-form')" >LIMPAR</button>
+                                        <button class="btn-danger" align="center" onclick="resetForm('#atualizar-form')" >LIMPAR</button>
                                     </span>
                                 </div>
                             </form>
@@ -501,7 +528,7 @@
                 // JQuery Javascript (Exibe data de Batismo, caso a pergunta é Batizado=SIM)
                 $('input:radio[name="batismo_status"]').change(
                     function(){
-                        if(this.checked && this.value == 'SIM'){
+                        if(this.checked && this.value == 'sim'){
                             $('#wedding_batismo').show();
                             $("#data_batismo").prop('required',true);
                         }
@@ -512,20 +539,20 @@
                     });
 
 
-            // handle register form submission
-            $('#register-form').on('submit', (e) => {
+            // handle atualizar form submission
+            $('#atualizar-form').on('submit', (e) => {
                 e.preventDefault()
-                toggleAble('#submit', true, 'registering member...')
+                toggleAble('#submit', true, 'Atualizando Membro...')
                 // let data = {}
                 let input = document.querySelector('#img-input')
-                data = $('#register-form').serializeArray()
+                data = $('#atualizar-form').serializeArray()
                 //send to db route
-                $.ajax({url: "{{route('member.register')}}", data, type: 'POST'})
+                $.ajax({url: "{{route('member.atualizar')}}", data, type: 'GET'})
                         .done((res) => {
                             if (res.status) {
                                 swal("Success!", res.text, "success");
                                 uploadImg()
-                                resetForm('#register-form')
+                                resetForm('#atualizar-form')
                                 resetImgUpl()
                                 toggleAble('#submit', false)
                             } else {
@@ -630,33 +657,7 @@
         var video;
         var webcamStream;
 
-        // function startWebcam() {
-        // 	if (navigator.getUserMedia) {
-        // 		 navigator.getUserMedia (
-        //
-        // 				// constraints
-        // 				{
-        // 					 video: true,
-        // 					 audio: false
-        // 				},
-        //
-        // 				// successCallback
-        // 				function(localMediaStream) {
-        // 						video = document.querySelector('video');
-        // 					 video.src = window.URL.createObjectURL(localMediaStream);
-        // 					 webcamStream = localMediaStream;
-        // 				},
-        //
-        // 				// errorCallback
-        // 				function(err) {
-        // 					 console.log("The following error occured: " + err);
-        // 				}
-        // 		 );
-        // 	} else {
-        // 		 console.log("getUserMedia not supported");
-        // 	}
-        // }
-
+   
         function stopWebcam() {
             // if (webcamStream) {
             //    webcamStream.getTracks().forEach(function (track) { track.stop(); });
