@@ -163,7 +163,6 @@ li {
                         <th class="min-tablet">Service type</th>
                         <th class="min-tablet">Men</th>
                         <th class="min-tablet">Women</th>
-                        <th class="min-tablet">Children</th>
                         <th class="min-tablet">Total</th>
                         <th class="min-tablet">Transaction Date</th>
                         <th class="min-tablet">Processed Date</th>
@@ -181,10 +180,9 @@ li {
                     <tr>
                         <td><strong>{{$count}}</strong></td>
                         <td>{{$list->service_types->name}}</td>
-                        <td>{{$list->male}}</td>
-                        <td>{{$list->female}}</td>
-                        <td>{{$list->children}}</td>
-                        <td>{{$list->male + $list->female + $list->children}}</td>
+                        <td>{{$list->Masculino}}</td>
+                        <td>{{$list->Feminino}}</td>
+                        <td>{{$list->Masculino + $list->Feminino}}</td>
                         <td>{{$list->attendance_date}}</td>
                         <td>{{$list->created_at}}</td>
                         <td><button id="{{$list->attendance_date}}" type="submit" class="btn btn-primary viewBtn" onclick="viewer(this);">View</button></td>
@@ -406,7 +404,7 @@ return  `
           <div class="panel-body text-center clearfix">
               <div class="col-sm-4 pad-top">
                   <div class="text-lg">
-                      <p class="text-5x text-thin text-main">${(parseInt(attendance.male) + parseInt(attendance.female) + parseInt(attendance.children))}</p>
+                      <p class="text-5x text-thin text-main">${(parseInt(attendance.Masculino) + parseInt(attendance.Feminino) ))}</p>
                   </div>
                   <p class="text-sm text-bold text-uppercase">Total Attendance</p>
               </div>
@@ -416,7 +414,7 @@ return  `
                   <ul class="list-unstyled text-center bord-to pad-top mar-no row">
                       <li class="col-xs-4">
                         <div class="col">
-                          <span class="text-lg text-semibold text-main">${attendance.male}</span>
+                          <span class="text-lg text-semibold text-main">${attendance.Masculino}</span>
                           <p class="text-sm text-muted mar-no">Men</p>
                         </div>
                         <div class="col">
@@ -425,22 +423,14 @@ return  `
                       </li>
                       <li class="col-xs-4">
                         <div class="col">
-                          <span class="text-lg text-semibold text-main">${attendance.female}</span>
+                          <span class="text-lg text-semibold text-main">${attendance.Feminino}</span>
                           <p class="text-sm text-muted mar-no">Women</p>
                         </div>
                         <div class="col">
                           <span class="icon fa fa-female"></span>
                         </div>
                       </li>
-                      <li class="col-xs-4">
-                        <div class="col">
-                          <span class="text-lg text-semibold text-main">${attendance.children}</span>
-                          <p class="text-sm text-muted mar-no">Children</p>
-                        </div>
-                        <div class="col">
-                          <span class="icon fa fa-child"></span>
-                        </div>
-                      </li>
+
                   </ul>
               </div>
           </div>

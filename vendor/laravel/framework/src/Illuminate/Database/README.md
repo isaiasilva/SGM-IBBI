@@ -1,10 +1,10 @@
-## Iluminar banco de dados
+## Illuminate Database
 
-O componente Illuminate Database é um kit completo de ferramentas de banco de dados para PHP, fornecendo um construtor de consultas expressivo, ORM estilo ActiveRecord e construtor de esquema. Atualmente, ele suporta MySQL, Postgres, SQL Server e SQLite. Também serve como a camada de banco de dados da estrutura PHP do Laravel.
+The Illuminate Database component is a full database toolkit for PHP, providing an expressive query builder, ActiveRecord style ORM, and schema builder. It currently supports MySQL, Postgres, SQL Server, and SQLite. It also serves as the database layer of the Laravel PHP framework.
 
-### Instruções de uso
+### Usage Instructions
 
-Primeiro, crie uma nova instância do gerenciador "Capsule". O Capsule visa facilitar ao máximo a configuração da biblioteca para uso fora da estrutura do Laravel.
+First, create a new "Capsule" manager instance. Capsule aims to make configuring the library for usage outside of the Laravel framework as easy as possible.
 
 ```PHP
 use Illuminate\Database\Capsule\Manager as Capsule;

@@ -13,6 +13,8 @@
 .icofont{
   font-size: 35px;
 }
+
+
 </style>
 @endsection
 
@@ -220,19 +222,15 @@ $colors = colo();//$generateColor($c_types);
                           <table class="table table-condensed table-trans">
                               <tr>
                                   <td class="text-lg" style="width: 40px">
-                                    <span class="badge badge-purple" style="background-color: {{$colors[0]}}" id="attendance-male">0</span></td>
+                                    <span class="badge badge-purple" style="background-color: {{$colors[0]}}" id="attendance-Masculino">0</span></td>
                                   <td>Masculino</td>
                               </tr>
                               <tr>
                                   <td class="text-lg">
-                                    <span class="badge badge-dark" style="background-color: {{$colors[1]}}" id="attendance-female">0</span></td>
+                                    <span class="badge badge-dark" style="background-color: {{$colors[1]}}" id="attendance-Feminino">0</span></td>
                                   <td>Feminino</td>
                               </tr>
-                              <tr>
-                                  <td class="text-lg">
-                                    <span class="badge badge-danger" style="background-color: {{$colors[2]}}" id="attendance-children">0</span></td>
-                                  <td>Children</td>
-                              </tr>
+
                               <hr>
                               <tr>
                                 <td>
@@ -683,12 +681,12 @@ $(document).ready(() => {
     $('#due-commission').html(formatMoney(parseFloat(res)))
   })
   // get member registration statistics
-  $.ajax({url: "{{route('member.reg.stats')}}"})
+  $.ajax({url: "{{route('member.reg.status')}}"})
   .done((res) => {
-    members = setPeriod(res, {male: 0, female: 0, total: 0}, ["male", "female"])
+    members = setPeriod(res, {Masculino: 0, Feminino: 0, total: 0}, ["Masculino", "Feminino"])
     // display calulations
-    $("#member-male").html(numberWithCommas(members.total.male))
-    $("#member-female").html(numberWithCommas(members.total.female))
+    $("#member-Masculino").html(numberWithCommas(members.total.Masculino))
+    $("#member-Feminino").html(numberWithCommas(members.total.Feminino))
     $("#member-total").html(numberWithCommas(members.total.total))
     // console.log(members);
     $.plot("#users-chart", members, {
@@ -721,19 +719,18 @@ $(document).ready(() => {
             tickColor: '#ffffff'
         },
     });
-    // console.log(male);
+    // console.log(Masculino);
     // console.log(res);
   })
 
   // get attendance statistics
-  $.ajax({url: "{{route('attendance.stats')}}"})
+  $.ajax({url: "{{route('attendance.status')}}"})
   .done((res) => {
-    attendance = setPeriod(res, {male: 0, female: 0, children: 0, total: 0}, ["male", "female", "children"])
+    attendance = setPeriod(res, {Masculino: 0, Feminino: 0, total: 0}, ["Masculino", "Feminino"])
     console.log(attendance);
     // display calulations
-    $("#attendance-male").html(numberWithCommas(attendance.total.male))
-    $("#attendance-female").html(numberWithCommas(attendance.total.female))
-    $("#attendance-children").html(numberWithCommas(attendance.total.children))
+    $("#attendance-Masculino").html(numberWithCommas(attendance.total.Masculino))
+    $("#attendance-Feminino").html(numberWithCommas(attendance.total.Feminino))
     $("#attendance-total").html(numberWithCommas(attendance.total.total))
     $.plot("#attendance-chart", attendance, {
         series: {
@@ -768,7 +765,7 @@ $(document).ready(() => {
   })
 
   // get member registration statistics
-  $.ajax({url: "{{route('collection.stats')}}"})
+  $.ajax({url: "{{route('collection.status')}}"})
   .done((res) => {
     collections = (() => {
       let newarr = []
@@ -823,7 +820,7 @@ $(document).ready(() => {
             tickColor: '#ffffff'
         },
     });
-    // console.log(male);
+    // console.log(Masculino);
     // console.log(res);
   })
   // plot datatables

@@ -1,10 +1,14 @@
 <?php
 
+
+namespace App\Providers;
+
 namespace App\Http\Controllers;
 
 use App\Member;
 use Yajra\Datatables\Datatables;
 use App\CollectionsType;
+use App\Http\Requests\Painel\ProductFormRequest;
 
 use Illuminate\Http\Request;
 
@@ -43,6 +47,7 @@ class MemberController extends Controller
     public function create()
     {
       return view('members.register');//, compact('classes', 'sections'));
+     # return view('members.create-edit');
     }
 
     /**
@@ -149,6 +154,7 @@ class MemberController extends Controller
     public function show(Member $member, $id)
     {
       $member = Member::find($id);
+     // var_dump($member);
       $user = \Auth::user();
       // dd($user->members()->where('members.id', $id)->get());
       $c_types = CollectionsType::getTypes();
@@ -166,17 +172,33 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member)
-    {
-        $array = array('id'=>$id);
+    
+     public function edit($id){
+    // Método responsável por carregar a tela de edição, buscando as informações conforme o membro selecionado e congregação(branch) selecionada.
+    // Returna o html edit.blade.php
+      $user = \Auth::user();
+      $member = Member::whereId($id)->where('branch_id',$user->id)->first();
+      
+      $title = "Editar Membro: {$member->nome_completo}";
+      //var_dump($member);
+      if (!$member) { 
+          return 'Membro não existe'; 
+      } 
+      return view('members.edit', compact('title','member'));
+    }
+    
+    public function edit_1(Member $member) {
+        $array = array('id' => $id);
         Validator::make($array, [
             'id' => 'required|integer|max:10',
         ])->validate();
         $subjects = Subject::all();
         $subject = Subject::whereId($id)->firstOrFail();
-        $edit = array('editmode'=>'true');
+        var_dump($subjects);
+        $edit = array('editmode' => 'true');
         $classes = TheClass::all();
-        return view('subject.index', compact('subjects', 'subject', 'edit', 'classes'));
+        
+        return view('subject.index', compact('subjects','subject', 'edit', 'classes'));
     }
 
     /**
@@ -186,50 +208,96 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
+
+    public function modify($id){
+    // Método responsável por carregar a tela de edição, buscando as informações conforme o membro selecionado e congregação(branch) selecionada.
+    // Returna o html edit.blade.php
+      $user = \Auth::user();
+      $member = Member::whereId($id)->where('branch_id',$user->id)->first();
+      //var_dump($member);
+      if (!$member) { 
+          return 'Membro não existe'; 
+      } 
+      return view('members.edit', compact('member'));
+    }
+
+        public function updateMember(Request $request){
+            
+             return 'Update Memeber'; 
+        
+      $member = Member::whereId($request->id)->first();
+        
+      if($member) {
+        $errors = [];
+        $fields = (array)$request->request;//->parameters;//->ParameterBag->parameters;
+        $fields = $fields["\x00*\x00parameters"];
+        foreach ($fields as $key => $value) {
+          if ($key != 'id' && $key != '_token' && $key != 'action') {
+              $member->$key = $request->$key;
+          }
+        }
+        try {
+          $member->save();
+        } catch (\Exception $e) {
+          array_push($errors, $e);
+          // dd($e);
+          return response()->json(['status' => false, 'text' => $e->errorInfo[2]]);
+        }
+      }
+      else {
+          return response()->json(['status' => false, 'text' => "Este Membro nao existe ou nao encontrado"]);
+      }
+      return response()->json(['status' => true, 'text' => "O Membro foi atualizado!"]);
+    }
+    
     public function update(Request $request, Member $member)
     {
-        // check if image isnt empty
-        if (!empty($request->file('image'))){
-            // validate image
-            $this->validate($request, [
-                'class_id' => 'bail|required|integer|min:1',
-                'section_id' => 'required|integer|min:1',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-            $image = $request->file('image');
-            $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $input['imagename']);
-            $image_name = $input['imagename'];
-        }
 
-        $member = Member::whereId($id)->firstOrFail();
-        $member->class_id = $request->get('class_id');
-        $member->section_id = $request->get('section_id');
-        $member->nome_completo = $request->get('nome_completo');
-        $member->cpf = $request->get('cpf');
-        $member->rg = $request->get('rg');
-        $member->address = $request->get('address');
-        $member->bairro = $request->get('bairro');
-        $member->dob = $request->get('dob');
-        if (!empty($image_name) && ($image_name!== NULL)) $member->image = $image_name;
-        $member->email = $request->get('email');
-        $member->phone = $request->get('phone');
-        $member->position = $request->get('position');
-        $member->postal = $request->get('postal');
-        $member->city = $request->get('city');
-        $member->state = $request->get('state');
-        $member->country = $request->get('country');
-        $member->sexo = $request->get('sexo');
-        $member->estado_civil = $request->get('estado_civil');
-        $member->status = $request->get('status');
-        $member->batismo_status = $request->get('batismo_status');
-        $member->data_batismo = $request->get('data_batismo');
-        $member->wedding_anniversary = $request->get('wedding_anniversary');
-        $member->photo = $request->get('photo');
+       if (!empty($request->file('image'))){
+           // validate image
+           $this->validate($request, [
+               'class_id' => 'bail|required|integer|min:1',
+               'section_id' => 'required|integer|min:1',
+               'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           ]);
+           $image = $request->file('image');
+           $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+           $destinationPath = public_path('/images');
+           $image->move($destinationPath, $input['imagename']);
+           $image_name = $input['imagename'];
+       }
 
-        $member->save();
-        return redirect(action('MemberController@edit_form', $id))->with('status', 'Registro de membro atualizado com sucesso!');
+       //$member = Member::whereId('id')->firstOrFail();
+        $member = Member::whereId($request->id)->firstOrFail();;;
+              
+      # $member->class_id = $request->get('class_id');
+      # $member->section_id = $request->get('section_id');
+       $member->nome_completo = $request->get('nome_completo');
+       $member->email = $request->get('email');
+       $member->dob = $request->get('dob');
+       $member->phone = $request->get('phone');
+       $member->occupation = $request->get('occupation');
+       $member->position = $request->get('position');
+       $member->address = $request->get('address');
+       $member->bairro = $request->get('bairro');
+       $member->postal = $request->get('postal');
+       $member->city = $request->get('city');
+       $member->state = $request->get('state');
+       $member->country = $request->get('country');  
+       $member->sexo = $request->get('sexo');
+       $member->estado_civil = $request->get('estado_civil');
+       $member->wedding_anniversary = $request->get('wedding_anniversary');
+       $member->cpf = $request->get('cpf');
+       $member->rg = $request->get('rg');
+       $member->batismo_status = $request->get('batismo_status'); 
+       $member->data_batismo = $request->get('data_batismo');
+       $member->status = $request->get('status');
+       $member->photo = $request->get('photo');
+       if (!empty($image_name) && ($image_name!== NULL)) $member->photo = $image_name;
+
+       $member->save();
+       return redirect(action('MemberController@index', $member->id))->with('status', 'Registro de membro atualizado com sucesso!');
+        
 
     }
 
@@ -272,13 +340,6 @@ class MemberController extends Controller
       return response()->json(['success' => true, "result"=> sizeof($members) > 0 ? $members : ['message'=>'no result found']]);
     }
 
-    public function modify($id){
-      $user = \Auth::user();
-      $member = Member::whereId($id)->where('branch_id',$user->id)->first();
-      if (!$member) { return 'Member Not exists'; }
-      return view('members.atualizar', compact('member'));
-    }
-
     public function upgrade(Request $request){
       $status = false;
       $user = Member::where('id', $request->id)->first()->upgrade();
@@ -313,29 +374,6 @@ class MemberController extends Controller
       return new \App\Mail\MailToMember($request, \Auth::user());
     }
 
-    public function updateMember(Request $request){
-      $member = Member::whereId($request->id)->first();
-      // dd($request);
-      if($member) {
-        $errors = [];
-        $fields = (array)$request->request;//->parameters;//->ParameterBag->parameters;
-        $fields = $fields["\x00*\x00parameters"];
-        foreach ($fields as $key => $value) {
-          if ($key != 'id' && $key != '_token' && $key != 'action') {
-              $member->$key = $request->$key;
-          }
-        }
-        try {
-          $member->save();
-        } catch (\Exception $e) {
-          array_push($errors, $e);
-          // dd($e);
-          return response()->json(['status' => false, 'text' => $e->errorInfo[2]]);
-        }
-      }
-      else {return response()->json(['status' => false, 'text' => "Member does not exist"]);}
-      return response()->json(['status' => true, 'text' => "Member has been updated!"]);
-    }
 
     public function attendance($id, Request $request){
       $member = Member::find($id);
@@ -429,17 +467,17 @@ class MemberController extends Controller
     }
     return $obj;
   }
-// count(case when sex = 'male' then 1 end) AS male, count(case when sex = 'female' then 1 end) AS female,
-  public function memberRegStats(Request $request){
+// count(case when sex = 'Masculino' then 1 end) AS Masculino, count(case when sex = 'Feminino' then 1 end) AS Feminino,
+  public function memberRegStatus(Request $request){
     $user = \Auth::user();
-    $members = Member::selectRaw("COUNT(id) as total, SUM(CASE WHEN sex='male' THEN 1 ELSE 0 END) AS male, SUM(CASE WHEN sex='female' THEN 1 ELSE 0 END) AS female,
+    $members = Member::selectRaw("COUNT(id) as total, SUM(CASE WHEN sexo='Masculino' THEN 1 ELSE 0 END) AS Masculino, SUM(CASE WHEN sexo='Feminino' THEN 1 ELSE 0 END) AS Feminino,
     MONTH(member_since) AS month")->whereRaw("member_since > DATE(now() + INTERVAL - 12 MONTH)")->where("branch_id", $user->id)->groupBy("month")->get();
     // dd($members);
     $group = 'month';
     $months = [];
     $interval = 0;
     $ii = 11;
-    $c_types = Array('male', 'female');
+    $c_types = Array('Masculino', 'Feminino');
     for ($i = $interval; $i <= 11; $i++) {
       $t = 'M';
       switch ($group) {
@@ -460,18 +498,18 @@ class MemberController extends Controller
   		foreach ($members as $member) {
         $m;
         switch ($member->$group) {
-          case 1: $m = 'Jan'; break;
-          case 2: $m = 'Feb'; break;
-          case 3: $m = 'Mar'; break;
-          case 4: $m = 'Apr'; break;
-          case 5: $m = 'May'; break;
-          case 6: $m = 'Jun'; break;
-          case 7: $m = 'Jul'; break;
-          case 8: $m = 'Aug'; break;
-          case 9: $m = 'Sep'; break;
-          case 10: $m = 'Oct'; break;
-          case 11: $m = 'Nov'; break;
-          case 12: $m = 'Dec'; break;
+          case 1: $m = 'Janeiro'; break;
+          case 2: $m = 'Fevereiro'; break;
+          case 3: $m = 'Março'; break;
+          case 4: $m = 'Abril'; break;
+          case 5: $m = 'Maio'; break;
+          case 6: $m = 'Junho'; break;
+          case 7: $m = 'Julho'; break;
+          case 8: $m = 'Agosto'; break;
+          case 9: $m = 'Setembro'; break;
+          case 10: $m = 'Outubro'; break;
+          case 11: $m = 'Novembro'; break;
+          case 12: $m = 'Dezembro'; break;
         }
         // dd($m);
   			if($month == $m){

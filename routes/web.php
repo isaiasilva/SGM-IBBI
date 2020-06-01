@@ -31,14 +31,18 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::post('/member/register', 'MemberController@store')->name('member.register');
     Route::get('/members/all', 'MemberController@index')->name('members.all');
     Route::get('/member/profile/{id}', 'MemberController@show')->name('member.profile');
-    Route::get('/member/atualizar/{id}', 'MemberController@modify')->name('member.atualizar');
+    #Route::get('/member/{id}/edit', 'MemberController@modify')->name('member.edit');
+    Route::get('/member/{id}/edit', 'MemberController@edit')->name('member.update');
+    Route::put('/member/update', 'MemberController@update')->name('member.update');
+    Route::post('/member/update', 'MemberController@update')->name('member.edit');
+  #  Route::patch('/member/update/', 'MemberController@update')->name('member.update');
+    
     Route::post('/member/delete/{id}', 'MemberController@destroy')->name('member.delete');
     Route::post('/member/delete', 'MemberController@delete')->name('member.delete.multi');
     Route::post('/member/upgrade', 'MemberController@upgrade')->name('member.upgrade');
     Route::post('/member/upload/img', 'MemberController@uploadImg')->name('member.upload.img');
-    Route::post('/member/atualizar', 'MemberController@updateMember')->name('member.atualizar');
     Route::get('/member/analysis', 'MemberController@memberAnalysis')->name('member.analysis');
-    Route::get('/member/stats', 'MemberController@memberRegStats')->name('member.reg.stats');
+    Route::get('/member/status', 'MemberController@memberRegStatus')->name('member.reg.status');
     Route::get('/member/attendance/{id}', 'MemberController@attendance')->name('member.attendance');
 
     Route::get('/branches', 'BranchController@index')->name('branches');
@@ -63,7 +67,7 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     //function () {        return view('attendance.view');});
     Route::post('/attendance/view', 'AttendanceController@show')->name('attendance.view');
     Route::get('/attendance/view/{date}', 'AttendanceController@show')->name('attendance.view.custom');
-    Route::get('/attendance/stats', 'AttendanceController@attendanceStats')->name('attendance.stats');
+    Route::get('/attendance/status', 'AttendanceController@attendanceStats')->name('attendance.status');
 
     // collection
     Route::get('/collection/offering', 'CollectionController@index')->name('collection.offering');
@@ -72,7 +76,7 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::get('/collection/report', 'CollectionController@report')->name('collection.report');
     Route::get('/collection/analysis', 'CollectionController@analysis')->name('collection.analysis');
     Route::get('/collection/history', 'CollectionController@history')->name('collection.history');
-    Route::get('/collection/stats', 'CollectionController@collectionStats')->name('collection.stats');
+    Route::get('/collection/status', 'CollectionController@collectionStats')->name('collection.status');
 
     // calendar
     Route::get('/calendar', 'EventController@index')->name('calendar');

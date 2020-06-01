@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') All Group Members @endsection
+@section('title') Todos os Membros do Grupo @endsection
 
 @section('content')
 <!--CONTENT CONTAINER-->
@@ -11,7 +11,7 @@
         <!--Page Title-->
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <div id="page-title">
-            <h1 class="page-header text-overflow">Group Members</h1>
+            <h1 class="page-header text-overflow">Grupo de Membros</h1>
         </div>
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <!--End page title-->
@@ -24,9 +24,9 @@
               <i class="fa fa-home"></i><a href="{{route('dashboard')}}"> Dashboard</a>
           </li>
             <li>
-                <i class="fa fa-users"></i><a href="{{url('groups')}}"> Groups</a>
+                <i class="fa fa-users"></i><a href="{{url('groups')}}"> Grupos</a>
             </li>
-            <li class="active">Members</li>
+            <li class="active">Membros</li>
         </ol>
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <!--End breadcrumb-->
@@ -99,22 +99,22 @@
         <!--===================================================-->
         <div class="panel"  style="background-color: #e8ddd3;">
             <div class="panel-heading">
-                <h3 class="panel-title text-center">List of members in <strong>{{strtoupper($group->name)}}</strong> Group</h3>
+                <h3 class="panel-title text-center">Lista de membros no grupo: <strong>{{strtoupper($group->name)}}</strong> Grupo</h3>
             </div>
             <div class="panel-body" style="overflow:scroll">
             <table id="demo-dt-basic" class="table table-striped table-bordered datatable" cellspacing="0" width="100%" >
             <thead>
                 <tr>
                     <th>S/N</th>
-                    <th>Photo</th>
-                    <th>Position</th>
-                    <th>Fullname</th>
-                    <th>Occupation</th>
+                    <th>Foto</th>
+                    <th>Posição</th>
+                    <th>Nome Completo</th>
+                    <th>Profissão</th>
                     <th class="min-tablet">Marital Status</th>
                     <th class="min-tablet">Phone Number</th>
                     <th class="min-desktop">Birthday</th>
-                    <th class="min-desktop">Member Since</th>
-                    <th class="min-desktop">Action</th>
+                    <th class="min-desktop">CPF</th>
+                    <th class="min-desktop">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -128,10 +128,10 @@
                     <td><strong>{{strtoupper($member->position)}}</strong></td>
                     <td>{{$member->getFullname()}}</td>
                     <td>{{$member->occupation}}</td>
-                    <td>{{$member->marital_status}}</td>
+                    <td>{{$member->status}}</td>
                     <td>{{$member->phone}}</td>
                     <td>{{$member->dob}}</td>
-                    <td>{{$member->member_since}}</td>
+                    <td>{{$member->cpf}}</td>
                     <td>
                         <a class="btn btn-success btn-sm" href="{{route('member.profile', $member->id)}}">View Profile</a>
                         @if(isset($members_in_branch))

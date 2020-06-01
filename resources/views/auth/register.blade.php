@@ -53,13 +53,13 @@
     <div class="cls-content-lg panel">
         <div class="panel-body">
             <div class="mar-ver pad-btm text-light">
-                <h1 class="h3 text-light">Crie uma nova conta de filial</h1>
+                <h1 class="h3 text-light">Crie uma nova conta de congregação</h1>
                 <p>Set up account.</p>
             </div>
             @if (isset($_GET['s']))
             <div class="alert alert-success" role="alert">
               <span class="text-danger">
-                  <strong>Nova filial adicionada com sucesso</strong>
+                  <strong>Nova congregação adicionada com sucesso</strong>
               </span>
             </div>
             @endif

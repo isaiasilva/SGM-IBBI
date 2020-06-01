@@ -44,7 +44,7 @@ class AttendanceController extends Controller
         $split_date_array = explode("-",$request->get('date'));
         if (Carbon::createFromDate($split_date_array[0], $split_date_array[1], $split_date_array[2])->isFuture())
         {
-            return response()->json(['status' => false, 'text' => "**You can't save attendance for a future date!"]);
+            return response()->json(['status' => false, 'text' => "** Você não pode salvar o comparecimento para uma data futura!"]);
         }
 
         // check if attendnace has already been marked for that date
@@ -57,9 +57,8 @@ class AttendanceController extends Controller
         // register attendance
         $attendance = new Attendance(array(
             'branch_id' => $user->id,
-            'male' => $request->get('male'),
-            'female' => $request->get('female'),
-            'children' => $request->get('children'),
+            'Masculino' => $request->get('Masculino'),
+            'Feminino' => $request->get('Feminino'),
             'service_types_id' => $request->get('type'),
             'attendance_date' => $dateToSave,
         ));
@@ -148,21 +147,21 @@ class AttendanceController extends Controller
     public function analysis(){
 
         $user = \Auth::user();
-        $sql = "SELECT SUM(male) AS male, SUM(female) AS female, SUM(children) AS children,
+        $sql = "SELECT SUM(Masculino) AS Masculino, SUM(Feminino) AS Feminino,
         MONTH(attendance_date) AS month FROM `attendances` WHERE YEAR(attendance_date) = YEAR(CURDATE()) AND branch_id = '$user->id' GROUP BY month";
         $attendances = \DB::select($sql);
         //day
-        $sql = "SELECT SUM(male) AS male, SUM(female) AS female, SUM(children) AS children,
+        $sql = "SELECT SUM(Masculino) AS Masculino, SUM(Feminino) AS Feminino,
         DAYOFWEEK(attendance_date) AS day FROM `attendances` WHERE attendance_date >= DATE(NOW() + INTERVAL - 7 DAY) AND WEEK(attendance_date) = WEEK(DATE(NOW())) AND branch_id = '$user->id' GROUP BY day";
         $attendances2 = \DB::select($sql);
 
         //Week
-        $sql = "SELECT SUM(male) AS male, SUM(female) AS female, SUM(children) AS children,
+        $sql = "SELECT SUM(Masculino) AS Masculino, SUM(Feminino) AS Feminino, 
         WEEK(attendance_date) AS week FROM `attendances` WHERE YEAR(attendance_date) = YEAR(CURDATE()) AND attendance_date >= DATE(NOW() + INTERVAL - 10 WEEK) AND branch_id = '$user->id' GROUP BY week";
         $attendances3 = \DB::select($sql);
 
         //Year
-        $sql = "SELECT SUM(male) AS male, SUM(female) AS female, SUM(children) AS children,
+        $sql = "SELECT SUM(Masculino) AS Masculino, SUM(Feminino) AS Feminino,
         YEAR(attendance_date) AS year FROM `attendances` WHERE attendance_date >= DATE(NOW() + INTERVAL - 10 YEAR) AND branch_id = '$user->id' GROUP BY year";
         $attendances4 = \DB::select($sql);
 
@@ -188,9 +187,9 @@ class AttendanceController extends Controller
       $split_date_array = explode("-", date('Y-m-d', strtotime($request->date)));
       if (Carbon::createFromDate($split_date_array[0], $split_date_array[1], $split_date_array[2])->isFuture())
       {
-          return response()->json(['status' => false, 'text' => "**You can't save attendance for a future date!"]);
+          return response()->json(['status' => false, 'text' => "**Você não pode salvar o comparecimento para uma data futura!"]);
       }
-      if ($check = \App\MemberAttendance::where('date', date('Y-m-d', strtotime($request->date)))->first()) {
+      if ($check = \App\MemberAttendance::where('date', date('d-m-Y', strtotime($request->date)))->first()) {
         // code...
         return response()->json(['status' => false, 'text' => "Member Attendance for {$this->get_date_in_words($check->date)} Already Marked"]);
       }
@@ -210,14 +209,14 @@ class AttendanceController extends Controller
 
     public function attendanceStats(Request $request){
       $user = \Auth::user();
-      $attendances = Attendance::selectRaw("COUNT(id) as total, SUM(male) AS male, SUM(female) AS female, SUM(children) AS children,
+      $attendances = Attendance::selectRaw("COUNT(id) as total, SUM(Masculino) AS Masculino, SUM(Feminino) AS Feminino,
       MONTH(attendance_date) AS month")->whereRaw("attendance_date > DATE(now() + INTERVAL - 12 MONTH)")->where("branch_id", $user->id)->groupBy("month")->get();
 
       $group = 'month';
       $months = [];
       $interval = 0;
       $ii = 11;
-      $c_types = Array('male', 'female', 'children');
+      $c_types = Array('Masculino', 'Feminino');
       for ($i = $interval; $i <= 11; $i++) {
         $t = 'M';
         switch ($group) {

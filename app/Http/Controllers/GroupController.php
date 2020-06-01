@@ -20,7 +20,7 @@ class GroupController extends Controller
       //$members = $user->isAdmin() ? \App\Member::all() : \App\Member::where('branch_id', $user->id)->get();
       $groups = Group::where('branch_id', $user->id)->get();//all();
       //default groups
-      $firstimer_numbers = Member::where('branch_id', $user->id)->where('member_status', 'new')->get(['id'])->count();
+      $firstimer_numbers = Member::where('branch_id', $user->id)->where('status', 'new')->get(['id'])->count();
 
       return view('groups.all', compact('groups', 'firstimer_numbers'));
     }
@@ -157,7 +157,7 @@ class GroupController extends Controller
         $group = new \App\Group();
         $group->name = 'First Timers Group';
         // $group->save();
-        $members_in_group = Member::where('branch_id', $user->id)->where('member_status', 'new')->get();
+        $members_in_group = Member::where('branch_id', $user->id)->where('status', 'new')->get();
         return view('groups.view', compact('members_in_group', 'group'));
       }
       return ;
@@ -170,9 +170,9 @@ class GroupController extends Controller
       foreach ($names as $key => $value) {
         // code...
         if($value == 'First Timers Group'){
-          $group = Member::where('branch_id', $user)->where('member_status', 'new')->get();
+          $group = Member::where('branch_id', $user)->where('status', 'new')->get();
         }else{
-          $group = Group::selectRaw('groups.id, groups.name, members.firstname, members.lastname, members.email, members.phone')->leftjoin('group_members', 'group_members.group_id', 'groups.id')
+          $group = Group::selectRaw('groups.id, groups.name, members.nome_completo, members.email, members.phone')->leftjoin('group_members', 'group_members.group_id', 'groups.id')
             ->leftjoin('members', 'members.id', 'group_members.member_id')->where('groups.name', $value)->get();
         }
         if(!empty($group)){$groupMember[$value] = $group;}

@@ -102,7 +102,7 @@ $(document).ready(function () {
         columns: [
             { title: '<input id="select-all" type="checkbox" />Todos', data: 'id', render : ( data ) => ('<input type="checkbox" name="member[]" value="${data}" />')
             , name: 'id' },
-            { title: "Photo", data: 'photo', render: (photo) => (`<img src="{{url('/public/images')}}/${photo}"  class="img-md img-circle" alt="Profile Picture">`), name: 'photo' },
+            { title: "Photo", data: 'photo', render: (photo) => (`<img src="{{url('/public/images/')}}/${photo}"  class="img-md img-circle" alt="Profile Picture">`), name: 'photo' },
             { title: "Nome", data: 'nome_completo', name: 'nome_completo' },
             { title: "Status", data: 'status', name: 'status' },
             { title: "WhatsApp", data: 'phone', name: 'phone' },
@@ -115,8 +115,8 @@ $(document).ready(function () {
               <div class="btn-group">
                 
                 <button id="mostrar" style="background-color:orange" class="btn text-light edit" 
-                    href="../member/atualizar/${id}"> <i class="fa fa-edit"></i> 
-                  <a id="mostrar" href="{{route('member.atualizar')}}/${id}" > Editar </a>
+                    href="../member/${id}/edit"> <i class="fa fa-edit"></i> 
+                  <a id="mostrar" href="../member/${id}/edit" > Editarddddddddd </a>
                 </button>
                 <a style="background-color:green" class="btn text-light" href="../member/profile/${id}"><i class="fa fa-eye"></i></a>
                 <a id="${id}" style="background-color:#8c0e0e" class="d-member btn text-light"><i class="fa fa-trash"></i></a>
@@ -313,7 +313,7 @@ $(document).ready(function () {
     //  data = {}
     //  data = $(this).serializeArray()
 
-      url = "{{route('member.atualizar')}}"
+      url = "{{route('member.edit')}}"
         poster({url,data})
     })
 

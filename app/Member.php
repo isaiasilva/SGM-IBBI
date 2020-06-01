@@ -7,7 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     protected $guarded = ['id'];
+    protected $fillable = [
+        'id', 
+        'nome_completo', 
+        'cpf',
+        'rg', 
+        'dob', 
+        'email',
+        'phone', 
+        'occupation', 
+        'position',
+        'batismo_status', 
+        'data_batismo',
+        'postal', 
+        'address', 
+        'bairro',
+        'city', 
+        'state', 
+        'country',
+        'sexo', 
+        'estado_civil',
+        'wedding_anniversary', 
+        'status'
+        ];
 
+  
     public function getFullname(){
       return "$this->nome_completo";
     }

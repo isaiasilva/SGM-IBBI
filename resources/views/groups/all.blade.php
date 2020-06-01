@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title') All groups @endsection
+@section('title') Todos os Grupos @endsection
 
 @section('content')
 <!--CONTENT CONTAINER-->
@@ -11,7 +11,7 @@
         <!--Page Title-->
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <div id="page-title">
-            <h1 class="page-header text-overflow">Groups</h1>
+            <h1 class="page-header text-overflow">Grupos</h1>
         </div>
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
         <!--End page title-->
@@ -73,7 +73,7 @@
             @csrf
             <input type=text name=branch_id value="{{\Auth::user()->branchcode}}" hidden=hidden/>
             <input style="border:1px solid #ddd; padding:7px;outline:none" name=name type=text Placeholder="Group Name" required/>
-                <button type="submit" class="btn btn-success btn-md"><i class="fa fa-plus"></i> Create Group</button>
+                <button type="submit" class="btn btn-success btn-md"><i class="fa fa-plus"></i> Criar Grupo</button>
             </form>
             </div>
         </div>
@@ -90,10 +90,10 @@
                     <thead>
                         <tr>
                             <th>S/N</th>
-                            <th>Group Name</th>
-                            <th>Members</th>
-                            <th>Date Created</th>
-                            <th>Action</th>
+                            <th>Nome do Grupo</th>
+                            <th>Membros</th>
+                            <th>Data de Criação</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,19 +105,19 @@
                             <td>{{$group->getNumberOfMembers(\Auth::user()->branchcode)}}</td>
                             <td>{{ \Carbon\Carbon::parse(substr($group->created_at, 0, 10))->format('l, jS \\of F Y')}}</td>
                             <td>
-                                <a class="btn btn-success btn-sm d-inline" href="{{route('group.view', $group->id)}}">View Group</a>
-                                <a onclick="return confirm('Are you sure you want to delete the group?')" class="btn btn-sm d-inline" href="{{route('group.delete', $group->id)}}" style="background-color:#8c0e0e">Delete Group</a>
+                                <a class="btn btn-success btn-sm d-inline" href="{{route('group.view', $group->id)}}">Visualizar Grupo</a>
+                                <a onclick="return confirm('Tem certeza de que deseja excluir o grupo?')" class="btn btn-sm d-inline" href="{{route('group.delete', $group->id)}}" style="background-color:#8c0e0e">Excluir Grupo</a>
                             </td>
                         </tr>
                         <?php $count++;?>
                         @endforeach
                         <tr>
                             <th>{{$count++}}</th>
-                            <td><strong>First Timers Group</strong></td>
+                            <td><strong>Primeiros grupos</strong></td>
                             <td>{{$firstimer_numbers}}</td>
                             <td>Default</td>
                             <td>
-                                <a class="btn btn-success btn-sm d-inline" href="{{route('group.default.view', 'first')}}">View Group</a>
+                                <a class="btn btn-success btn-sm d-inline" href="{{route('group.default.view', 'first')}}">Visualizar Grupo</a>
                             </td>
                         </tr>
                     </tbody>

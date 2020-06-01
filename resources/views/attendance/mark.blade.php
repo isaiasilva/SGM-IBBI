@@ -76,23 +76,17 @@
                       <div class="row text-center">
                           <div class="col-sm-2">
                               <div class="form-group">
-                                  <label class="control-label">Male</label>
-                                  <input type="number" min=0 name="male" class="form-control" required>
+                                  <label class="control-label">Masculino</label>
+                                  <input type="number" min=0 name="Masculino" class="form-control" required>
                               </div>
                           </div>
                           <div class="col-sm-2">
                               <div class="form-group">
-                                  <label class="control-label">Female</label>
-                                  <input type="number" min=0 name="female" class="form-control" required>
+                                  <label class="control-label">Feminino</label>
+                                  <input type="number" min=0 name="Feminino" class="form-control" required>
                               </div>
                           </div>
 
-                          <div class="col-sm-2">
-                              <div class="form-group">
-                                  <label class="control-label">Children</label>
-                                  <input type="number" min=0 name="children" class="form-control" required>
-                              </div>
-                          </div>
 
                           <div class="col-sm-5">
                               <div class="form-group">

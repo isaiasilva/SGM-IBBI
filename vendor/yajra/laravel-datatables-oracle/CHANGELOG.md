@@ -8,6 +8,15 @@
 
 ### [Unreleased]
 
+### [v8.13.7] - 2019-06-12
+
+- Removal of redundant SoftDelete check. [#2103], credits to [@selecod]
+
+### [v8.13.6] - 2019-03-26
+
+- Allow boolean values for column[i].searchable [#1813], credits to [@sgotre].
+- Fix [#2032], [#1789].
+
 ### [v8.13.5] - 2019-02-13
 
 - Keep select bindings option. [#1988], credits to [@royduin].
@@ -286,7 +295,8 @@ return (new CollectionDataTable(User::all())->toJson();
 - Fix orderColumn api where related tables are not joined.
 - Fix nested with relation search and sort function.
 
-[Unreleased]: https://github.com/yajra/laravel-datatables/compare/v8.13.5...8.0
+[Unreleased]: https://github.com/yajra/laravel-datatables/compare/v8.13.6...8.0
+[v8.13.6]: https://github.com/yajra/laravel-datatables/compare/v8.13.5...v8.13.6
 [v8.13.5]: https://github.com/yajra/laravel-datatables/compare/v8.13.4...v8.13.5
 [v8.13.4]: https://github.com/yajra/laravel-datatables/compare/v8.13.3...v8.13.4
 [v8.13.3]: https://github.com/yajra/laravel-datatables/compare/v8.13.2...v8.13.3
@@ -380,6 +390,8 @@ return (new CollectionDataTable(User::all())->toJson();
 [#1942]: https://github.com/yajra/laravel-datatables/pull/1942
 [#1960]: https://github.com/yajra/laravel-datatables/pull/1960
 [#1988]: https://github.com/yajra/laravel-datatables/pull/1988
+[#1813]: https://github.com/yajra/laravel-datatables/pull/1813
+[#2103]: https://github.com/yajra/laravel-datatables/pull/2103
 
 [#1626]: https://github.com/yajra/laravel-datatables/issues/1626
 [#1617]: https://github.com/yajra/laravel-datatables/issues/1617
@@ -402,6 +414,8 @@ return (new CollectionDataTable(User::all())->toJson();
 [#1747]: https://github.com/yajra/laravel-datatables/issues/1747
 [#1951]: https://github.com/yajra/laravel-datatables/issues/1951
 [#1983]: https://github.com/yajra/laravel-datatables/issues/1983
+[#2032]: https://github.com/yajra/laravel-datatables/issues/2032
+[#1789]: https://github.com/yajra/laravel-datatables/issues/1789
 
 [laravel-datatables-fractal]: https://github.com/yajra/laravel-datatables-fractal
 
@@ -427,3 +441,5 @@ return (new CollectionDataTable(User::all())->toJson();
 [@ridaamirini]: https://github.com/ridaamirini
 [@Spodnet]: https://github.com/Spodnet
 [@royduin]: https://github.com/royduin
+[@sgotre]: https://github.com/sgotre
+[@selecod]: https://github.com/selecod
